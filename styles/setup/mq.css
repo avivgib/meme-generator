@@ -1,0 +1,16 @@
+/* Mobyle */
+@media screen and (max-width: 768px) {
+    .gallery-container {
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+  
+    button {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.9rem;
+    }
+  
+    .editor-controls input[type="text"] {
+      width: 150px;
+    }
+  }
+  

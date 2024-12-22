@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <title>Meme Generator</title>
+  </head>
+
+  <body onload="onInit()">
+    
+    <header>
+      <div class="logo header-logo">
+        <span>Meme-Gen</span>
+      </div>
+
+      <nav class="main-nav align-content-center">
+        <button onclick="showSection('gallery-section')">Gallery</button>
+        <button onclick="showSection('saved-section')">Saved</button>
+        <button onclick="showSection('editor-section')">Editor</button>
+      </nav>
+    </header>
+
+
+    <main>
+      <section class="gallery-section">
+        <div class="gallery-container"></div>
+      </section>
+      
+      <section class="saved-section hidden">
+        <div class="saves-container"></div>
+      </section>
+
+      <section class="editor-section hidden">
+        <canvas class="meme-canvas" width="500" height="500"></canvas>
+        <div class="editor-controls">
+          <input type="text" placeholder="Enter text" oninput="onTextChange(this.value)" />
+          <input type="color" onchange="onColorChange(this.value)" />
+          <button onclick="onIncreaseFont()">Increase Font</button>
+          <button onclick="onDecreaseFont()">Decrease Font</button>
+        </div>
+      </section>
+    </main>
+
+
+    <footer class="footer full main-layout">
+      <div class="footer-content flex direction-column align-items-center">
+        <div class="logo footer-logo">Meme-Gen</div>
+        <small>© 2024 Meme-Gen.com - Aviv Gibli</small>
+      </div>
+    </footer>
+
+    
+    <script src="./js/services/memeService.js"></script>
+    <script src="./js/controller/galleryController.js"></script>
+    <script src="./js/controller/memeController.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
