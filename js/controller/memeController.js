@@ -1,41 +1,48 @@
 'use strict'
 
+var gElCanvas
+var gCtx
+
 function renderMeme() {
-    const elCanvas = document.querySelector('.meme-canvas')
-    const ctx = elCanvas.getContext('2d')
+    gElCanvas = document.querySelector('.meme-canvas')
+    gCtx = gElCanvas.getContext('2d')
     const meme = getMeme()
 
     // Clear canvas
-    ctx.clearRect(0, 0, elCanvas.width, elCanvas.height)
+    gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height)
 
     // Draw image
+    drawImage(meme)
+}
+
+function drawImage(meme) {
     const img = gImgs.find((img) => img.id === meme.selectedImgId)
     if (img) {
         const image = new Image()
         image.src = img.url
         image.onload = () => {
-            ctx.drawImage(image, 0, 0, elCanvas.width, elCanvas.height)
-            drawText(ctx, meme, elCanvas)
+            gCtx.drawImage(image, 0, 0, gElCanvas.width, gElCanvas.height)
+            drawText(meme)
         }
     } else {
-        drawText(ctx, meme, elCanvas)
+        drawText(meme)
     }
 }
 
-function drawText(ctx, meme, canvas) {
+function drawText(meme) {
     meme.lines.forEach((line) => {
         if (!line.txt || !line.color || !line.size) {
             console.error(`Invalid line properties: ${line}`)
             return
         }
 
-        ctx.font = `${line.size}px Arial`
-        ctx.fillStyle = line.color
-        ctx.textAlign = 'center'
+        gCtx.font = `${line.size}px Arial`
+        gCtx.fillStyle = line.color
+        gCtx.textAlign = 'center'
 
-        const x = canvas.width / 2
+        const x = gElCanvas.width / 2
         const y = line.y + line.size
-        ctx.fillText(line.txt, x, y)
+        gCtx.fillText(line.txt, x, y)
     });
 }
 
@@ -63,4 +70,9 @@ function onImgSelect(imgId) {
     setImg(imgId)
     renderMeme()
     showSection('editor-section')
+}
+
+function onDownloadMeme(elLink) {
+    const imgContent = gElCanvas.toDataURL('image/jpeg')
+    elLink.href = imgContent
 }

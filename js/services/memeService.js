@@ -20,7 +20,6 @@ var gImgs = [
     { id: 17, url: 'imgs/17.jpg', keywords: ['funny', 'man']},
     { id: 18, url: 'imgs/18.jpg', keywords: ['funny', 'toy']}
 ]
-
 var gMeme = {
     selectedImgId: null,
     selectedLineIdx: 0,
