@@ -2,35 +2,31 @@
 
 var gElCanvas
 var gCtx
+var gMeme
 
 function renderMeme() {
     gElCanvas = document.querySelector('.meme-canvas')
     gCtx = gElCanvas.getContext('2d')
-    const meme = getMeme()
+    gMeme = getMeme()
 
-    // Clear canvas
     gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height)
-
-    // Draw image
-    drawImage(meme)
+    drawImage()
 }
 
-function drawImage(meme) {
-    const img = gImgs.find((img) => img.id === meme.selectedImgId)
+function drawImage() {
+    const img = gImgs.find((img) => img.id === gMeme.selectedImgId)
     if (img) {
         const image = new Image()
         image.src = img.url
         image.onload = () => {
             gCtx.drawImage(image, 0, 0, gElCanvas.width, gElCanvas.height)
-            drawText(meme)
+            drawText()
         }
-    } else {
-        drawText(meme)
     }
 }
 
-function drawText(meme) {
-    meme.lines.forEach((line) => {
+function drawText() {
+    gMeme.lines.forEach((line) => {
         if (!line.txt || !line.color || !line.size) {
             console.error(`Invalid line properties: ${line}`)
             return
@@ -46,9 +42,18 @@ function drawText(meme) {
     });
 }
 
+function updateText() {
+    clearCanvasText()
+    drawText(gMeme)
+}
+
+function clearCanvasText() {
+    gCtx.cl
+}
+
 function onTextChange(text) {
     setLineTxt(text)
-    renderMeme()
+    updateText()
 }
 
 function onColorChange(color) {
