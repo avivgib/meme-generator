@@ -1,12 +1,12 @@
 'use strict'
 
 function renderMeme() {
-    const canvas = document.querySelector('.meme-canvas')
-    const ctx = canvas.getContext('2d')
+    const elCanvas = document.querySelector('.meme-canvas')
+    const ctx = elCanvas.getContext('2d')
     const meme = getMeme()
 
     // Clear canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.clearRect(0, 0, elCanvas.width, elCanvas.height)
 
     // Draw image
     const img = gImgs.find((img) => img.id === meme.selectedImgId)
@@ -14,11 +14,11 @@ function renderMeme() {
         const image = new Image()
         image.src = img.url
         image.onload = () => {
-            ctx.drawImage(image, 0, 0, canvas.width, canvas.height)
-            drawText(ctx, meme, canvas)
+            ctx.drawImage(image, 0, 0, elCanvas.width, elCanvas.height)
+            drawText(ctx, meme, elCanvas)
         }
     } else {
-        drawText(ctx, meme, canvas)
+        drawText(ctx, meme, elCanvas)
     }
 }
 
@@ -28,11 +28,14 @@ function drawText(ctx, meme, canvas) {
             console.error(`Invalid line properties: ${line}`)
             return
         }
+
         ctx.font = `${line.size}px Arial`
         ctx.fillStyle = line.color
-
         ctx.textAlign = 'center'
-        ctx.fillText(line.txt, canvas.width / 2, line.y + 20)
+
+        const x = canvas.width / 2
+        const y = line.y + line.size
+        ctx.fillText(line.txt, x, y)
     });
 }
 
@@ -59,4 +62,5 @@ function onDecreaseFont() {
 function onImgSelect(imgId) {
     setImg(imgId)
     renderMeme()
+    showSection('editor-section')
 }
