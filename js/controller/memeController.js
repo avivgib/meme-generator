@@ -2,8 +2,8 @@
 
 var gElCanvas
 var gCtx
-var gMeme
 
+// Rendering Functions
 function renderMeme() {
     gElCanvas = document.querySelector('.meme-canvas')
     gCtx = gElCanvas.getContext('2d')
@@ -13,6 +13,10 @@ function renderMeme() {
     drawImage()
 }
 
+function saveCanvasBackground() {
+    gMeme.canvasBackground = gCtx.getImageData(0, 0, gElCanvas.width, gElCanvas.height)
+}
+
 function drawImage() {
     const img = gImgs.find((img) => img.id === gMeme.selectedImgId)
     if (img) {
@@ -20,61 +24,68 @@ function drawImage() {
         image.src = img.url
         image.onload = () => {
             gCtx.drawImage(image, 0, 0, gElCanvas.width, gElCanvas.height)
+            saveCanvasBackground()
             drawText()
         }
     }
 }
 
 function drawText() {
+    gCtx.putImageData(gMeme.canvasBackground, 0, 0)
+
     gMeme.lines.forEach((line) => {
         if (!line.txt || !line.color || !line.size) {
             console.error(`Invalid line properties: ${line}`)
             return
         }
 
-        gCtx.font = `${line.size}px Arial`
-        gCtx.fillStyle = line.color
-        gCtx.textAlign = 'center'
-
-        const x = gElCanvas.width / 2
-        const y = line.y + line.size
+        configureTextStyle(line)
+        const { x, y } = calculateTextPosition(line)
         gCtx.fillText(line.txt, x, y)
-    });
+    })
 }
 
-function updateText() {
-    clearCanvasText()
-    drawText(gMeme)
+function configureTextStyle(line) {
+    gCtx.font = `${line.size}px Arial`
+    gCtx.fillStyle = line.color || 'white'
+    gCtx.textAlign = 'center'
+    gCtx.strokeStyle = 'rgba(0, 0, 0, 0)'
 }
 
-function clearCanvasText() {
-    gCtx.cl
+function calculateTextPosition(line) {
+    const x = gElCanvas.width / 2
+    const y = line.y + line.size
+    return { x, y }
 }
 
+// Event Handlers
 function onTextChange(text) {
     setLineTxt(text)
-    updateText()
+    drawText()
 }
 
 function onColorChange(color) {
     setColor(color)
-    renderMeme()
+    drawText()
 }
 
 function onIncreaseFont() {
     increaseFont()
-    renderMeme()
+    drawText()
 }
 
 function onDecreaseFont() {
     decreaseFont()
-    renderMeme()
+    drawText()
 }
 
 function onImgSelect(imgId) {
     setImg(imgId)
     renderMeme()
     showSection('editor-section')
+
+    const elTextInput = document.querySelector('.meme-text-input')
+    if (elTextInput) elTextInput.focus()
 }
 
 function onDownloadMeme(elLink) {
