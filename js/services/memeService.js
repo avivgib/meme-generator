@@ -46,13 +46,30 @@ function getImgs() {
 }
 
 function setImg(imgId) {
-    gMeme.selectedImgId = imgId
+    if(gMeme.selectedImgId !== imgId) {
+        gMeme.selectedImgId = imgId
+        gCachedImage = null
+    }
+}
+
+function getImageById(imgId) {
+    const img = gImgs.find((img) => img.id === imgId)
+    if (!img) return null
+
+    const image = new Image()
+    image.src = img.url
+    return image
 }
 
 function setLineTxt(txt) {
     gMeme.lines[gMeme.selectedLineIdx].txt = txt.toUpperCase()
+}
 
-    // const elTxt = document.querySelector('')
+function resetEditor() {
+    const selectedLine = gMeme.lines[gMeme.selectedLineIdx];
+    selectedLine.txt = ''
+    selectedLine.color = 'white'
+    selectedLine.size = 30
 }
 
 function setColor(color) {
@@ -60,13 +77,15 @@ function setColor(color) {
 }
 
 function increaseFont() {
-    const maxFontSize = gElCanvas.width / 10
-    const currentSize = gMeme.lines[gMeme.selectedLineIdx].size
+    const maxFontSize = Math.floor(gElCanvas.width / 10)
 
-    gMeme.lines[gMeme.selectedLineIdx].size = Math.min(currentSize + 2, maxFontSize)
+    const selectedLine = gMeme.lines[gMeme.selectedLineIdx]
+    selectedLine.size = Math.min(selectedLine.size + 2, maxFontSize)
 }
 
 function decreaseFont() {
-    gMeme.lines[gMeme.selectedLineIdx].size = Math.max(20, gMeme.lines[gMeme.selectedLineIdx].size - 2)
+    const minFontSize = 10
+    const selectedLine = gMeme.lines[gMeme.selectedLineIdx]
+    selectedLine.size = Math.max(selectedLine.size - 2, minFontSize)
     // gMeme.fontSize = Math.max(10, gMeme.fontSize - 2)
 }

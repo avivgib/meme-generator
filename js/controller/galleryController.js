@@ -10,3 +10,16 @@ function renderGallery() {
 
         gallery.innerHTML = strHtml
 }
+
+function onImgSelect(imgId) {
+    setImg(imgId)
+    resetEditor()
+    renderMeme()
+    showSection('editor-section')
+
+    const elTextInput = document.querySelector('.meme-text-input')
+    elTextInput.focus()
+    elTextInput.value = ''
+    const elColor = document.querySelector('.color-input')
+    elColor.value = 'white'
+}

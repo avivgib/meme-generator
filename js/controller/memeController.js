@@ -2,6 +2,7 @@
 
 var gElCanvas
 var gCtx
+var gCachedImage = null
 
 // Rendering Functions
 function renderMeme() {
@@ -10,34 +11,65 @@ function renderMeme() {
     gMeme = getMeme()
 
     gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height)
-    drawImage()
+    loadImageOnce(() => {
+        console.log('Image is loaded!')
+        drawText()
+    })
 }
 
-function saveCanvasBackground() {
-    gMeme.canvasBackground = gCtx.getImageData(0, 0, gElCanvas.width, gElCanvas.height)
-}
+function loadImageOnce(callback) {
+    if (gCachedImage) {
+        // if image exist, draw it
+        drawImageToCanvas(gCachedImage)
+        if (callback) callback()
+        return
+    }
 
-function drawImage() {
+    // load the image in the first time
     const img = gImgs.find((img) => img.id === gMeme.selectedImgId)
-    if (img) {
-        const image = new Image()
-        image.src = img.url
-        image.onload = () => {
-            gCtx.drawImage(image, 0, 0, gElCanvas.width, gElCanvas.height)
-            saveCanvasBackground()
-            drawText()
-        }
+    if (!img) return
+
+    const image = new Image()
+    image.src = img.url
+    image.onload = () => {
+        gCachedImage = image
+        drawImageToCanvas(image)
+        if (callback) callback()
     }
 }
 
-function drawText() {
-    gCtx.putImageData(gMeme.canvasBackground, 0, 0)
+function drawImageToCanvas(image) {
+    const { width: canvasWidth, height: canvasHeight } = gElCanvas
+    const { width: imgWidth, height: imgHeight } = image
 
+    const { x, y, width, height } = calculateImageDimensions(canvasWidth, canvasHeight, imgWidth, imgHeight)
+    gCtx.drawImage(image, x, y, width, height)
+}
+
+function calculateImageDimensions(canvasWidth, canvasHeight, imgWidth, imgHeight) {
+    const canvasAspectRatio = canvasWidth / canvasHeight
+    const imgAspectRatio = imgWidth / imgHeight
+
+    let width, height
+    if (imgAspectRatio > canvasAspectRatio) {
+        // Image is wider than canvas
+        width = canvasWidth
+        height = canvasWidth / imgAspectRatio
+    } else {
+        // Image is taller than canvas
+        width = canvasHeight * imgAspectRatio
+        height = canvasHeight
+    }
+
+    const x = (canvasWidth - width) / 2
+    const y = (canvasHeight - height) / 2
+
+    return { x, y, width, height }
+}
+
+function drawText() {
     gMeme.lines.forEach((line) => {
-        if (!line.txt || !line.color || !line.size) {
-            console.error(`Invalid line properties: ${line}`)
-            return
-        }
+        if (!line.txt || !line.color || !line.size) return
 
         configureTextStyle(line)
         const { x, y } = calculateTextPosition(line)
@@ -61,34 +93,31 @@ function calculateTextPosition(line) {
 // Event Handlers
 function onTextChange(text) {
     setLineTxt(text)
-    drawText()
+    renderTextOnly()
 }
 
 function onColorChange(color) {
     setColor(color)
-    drawText()
+    renderTextOnly()
 }
 
 function onIncreaseFont() {
     increaseFont()
-    drawText()
+    renderTextOnly()
 }
 
 function onDecreaseFont() {
     decreaseFont()
-    drawText()
-}
-
-function onImgSelect(imgId) {
-    setImg(imgId)
-    renderMeme()
-    showSection('editor-section')
-
-    const elTextInput = document.querySelector('.meme-text-input')
-    if (elTextInput) elTextInput.focus()
+    renderTextOnly()
 }
 
 function onDownloadMeme(elLink) {
     const imgContent = gElCanvas.toDataURL('image/jpeg')
     elLink.href = imgContent
+}
+
+function renderTextOnly() {
+    gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height)
+    drawImageToCanvas(gCachedImage)
+    drawText()
 }
