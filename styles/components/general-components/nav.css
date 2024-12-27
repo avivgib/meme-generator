@@ -1,0 +1,38 @@
+
+/* Navigation Styles */
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em 0;
+  gap: 25px;
+  border-radius: 8px;
+}
+
+/* Button Styles */
+nav button {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  color: #bdbcbc;
+  background-image: linear-gradient(45deg, #b56576, #6a1b4d);
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+/* Hover Effect */
+nav button:hover {
+  background-image: linear-gradient(45deg, #c8879e, #7a245a); 
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Active Button Style */
+nav button.active {
+  background-image: linear-gradient(135deg, #b2eac5, #142055);
+  color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+}

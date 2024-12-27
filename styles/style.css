@@ -10,10 +10,12 @@
 /* COMPONENTS */
 /* @import url('./components/header.css');
 @import url('./components/logo.css');
-@import url('./components/nav.css');
-@import url('./components/card.css');
-@import url('./components/main-content.css');
-@import url('./components/footer.css'); */
+
+/* General Components */
+@import url('./components//general-components/header.css');
+@import url('./components/general-components/logo.css');
+@import url('./components/general-components/nav.css');
+@import url('./components/general-components/footer.css');
 
 /* MQ */
 @import url('./setup/mq.css');

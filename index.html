@@ -4,57 +4,68 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles/style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
     <title>Meme Generator</title>
   </head>
 
   <body onload="onInit()">
-    
-    <header>
-      <div class="logo header-logo">
-        <span>Meme-Gen</span>
-      </div>
+    <div class="main-layout">
 
-      <nav class="main-nav align-content-center">
-        <button onclick="showSection('gallery-section')">Gallery</button>
-        <button onclick="showSection('saved-section')">Saved</button>
-        <button onclick="showSection('editor-section')">Editor</button>
-      </nav>
-    </header>
+      <header class="main-header full align-content-center flex space-between">
+        <!-- <div class="header-content "> -->
 
+          <div class="logo header-logo align-content-center">
+            <span>Meme-Gen</span>
+          </div>
+          
+          <nav class="justify-center">
+            <button class="btn-nav gallery" onclick="showSection('gallery-section', this)">Gallery</button>
+            <button class="btn-nav saved" onclick="showSection('saved-section', this)">Saved</button>
+            <button class="btn-nav editor" onclick="showSection('editor-section', this)">Editor</button>
+          </nav>
+        <!-- </div> -->
+      </header>
 
-    <main>
-      <section class="gallery-section">
-        <div class="gallery-container"></div>
-      </section>
-      
-      <section class="saved-section hidden">
-        <div class="saves-container"></div>
-      </section>
+      <main>
+        <section class="gallery-section">
+          <div class="gallery-content">
+            <div class="gallery-container"></div>
+          </div>
+        </section>
 
-      <section class="editor-section hidden">
-        <canvas class="meme-canvas" width="400" height="400"></canvas>
-        <div class="editor-controls">
-          <input type="text" class="meme-text-input" placeholder="Enter text" oninput="onTextChange(this.value)" />
-          <input type="color" class="color-input" oninput="onColorChange(this.value)" />
-          <button onclick="onIncreaseFont()">Increase Font</button>
-          <button onclick="onDecreaseFont()">Decrease Font</button>
+        <section class="saved-section hidden">
+          <div class="save-content">
+            <div class="saves-container"></div>
+          </div>
+        </section>
+
+        <section class="editor-section hidden">
+          <div class="editor-content">
+            <canvas class="meme-canvas" width="400" height="400"></canvas>
+            <div class="editor-controls">
+              <input type="text" class="meme-text-input" placeholder="Enter text" oninput="onTextChange(this.value)"/>
+              <input type="color" class="color-input" oninput="onColorChange(this.value)"/>
+              <button onclick="onIncreaseFont()">Increase Font</button>
+              <button onclick="onDecreaseFont()">Decrease Font</button>
+            </div>
+            <div class="meme-actions">
+              <a href="#" class="btn download-btn" onclick="onDownloadMeme(this)" download="new-meme.jpg">Download Meme</a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer full align-content-center">
+        <div class="footer-content flex direction-column align-items-center">
+          <div class="logo footer-logo">Meme-Gen</div>
+          <small>© 2024 Meme-Gen.com - Aviv Gibli</small>
         </div>
-        <div class="meme-actions">
-          <a href="#" class="btn download-btn" onclick="onDownloadMeme(this)" download="new-meme.jpg">Download Meme</a>
-        </div>
-      </section>
-    </main>
+      </footer>
+    </div>
 
-
-    <footer class="footer full main-layout">
-      <div class="footer-content flex direction-column align-items-center">
-        <div class="logo footer-logo">Meme-Gen</div>
-        <small>© 2024 Meme-Gen.com - Aviv Gibli</small>
-      </div>
-    </footer>
-
-    
     <script src="./js/services/memeService.js"></script>
     <script src="./js/controller/galleryController.js"></script>
     <script src="./js/controller/memeController.js"></script>

@@ -14,8 +14,3 @@
 .main-layout>.full {
     grid-column: -1 / 1;
 }
-
-.main-layout>.main-content-place {
-    grid-row: 2;
-    height: 100vh;
-}
