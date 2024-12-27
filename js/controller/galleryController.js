@@ -15,7 +15,9 @@ function onImgSelect(imgId) {
     setImg(imgId)
     resetEditor()
     renderMeme()
-    showSection('editor-section')
+
+    const elEditorBtn = document.querySelector('.editor')
+    showSection('editor-section', elEditorBtn)
 
     const elTextInput = document.querySelector('.meme-text-input')
     elTextInput.focus()
