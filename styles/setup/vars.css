@@ -1,0 +1,13 @@
+:root {
+    /* LAYOUT BUTTONS */
+    --clr-border-btn: #4267B2;
+    --clr-bg-btn: #2367A6;
+
+    /* LAYOUT VARS */
+    --layout-img-margin: 80px;
+
+    /* LAYOUT SIZE */
+    --small: 600px;
+    --medium: 720px;
+    --large: 980px;
+}
