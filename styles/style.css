@@ -1,9 +1,11 @@
 /* SETUP */
-@import url('./setup/editor.css');
-@import url('./setup/gallery.css');
+@import url('./setup/typography.css');
+@import url('./setup/vars.css');
 
 /* BASICS */
 @import url('./basics/base.css');
+@import url('./basics/helpers.css');
+@import url('./basics/layout.css');
 
 /* COMPONENTS */
 /* @import url('./components/header.css');
