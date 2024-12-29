@@ -4,7 +4,7 @@
   align-content: center;
   flex-direction: row;
   align-items: flex-start;
-  gap: 5vw;
+  gap: 3vw;
 
   padding: 20px;
   border: 2px solid #ccc;
@@ -24,6 +24,13 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+
+  height: 400px;
+  width: 400px;
+
+  border: 1vh solid #8e8e8e;
+  background-color: #272927;
+  border-radius: 10px;
 }
 
 .editor-controls input,
@@ -32,7 +39,7 @@
   font-size: 14px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  cursor: pointer;
+  cursor: auto;
 }
 
 .editor-controls button {
@@ -45,14 +52,15 @@
 } */
 
 .editor-controls a {
-  margin-top: 120px; 
+  margin-top: 20px; 
   text-align: center; 
 
   display: inline-block;
   padding: 10px 20px;
+  border: 1px solid white;
   font-size: 14px;
   color: white;
-  background-color: #08170c;
+  background-color: #6c756f;
   text-decoration: none;
   border-radius: 5px;
   transition: background-image 0.3s ease; /* Ensure smooth transition for both color and gradient */
