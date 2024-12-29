@@ -4,13 +4,14 @@
   align-content: center;
   flex-direction: row;
   align-items: flex-start;
-  gap: 3vw;
+  gap: 1vw;
 
   padding: 20px;
   border: 2px solid #ccc;
   border-radius: 10px;
-  background-color: #f9f9f9;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3)
+  /* background-color: #f9f9f9; */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  background-image: linear-gradient(45deg, #b2eac5, #142055);
 }
 
 .meme-canvas {
@@ -28,7 +29,7 @@
   height: 400px;
   width: 400px;
 
-  border: 1vh solid #8e8e8e;
+  border: 3px solid #8e8e8e;
   background-color: #272927;
   border-radius: 10px;
 }
@@ -39,17 +40,12 @@
   font-size: 14px;
   border-radius: 5px;
   border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.editor-controls .text-input {
   cursor: auto;
 }
-
-.editor-controls button {
-  color: white;
-  transition: background-color 0.3s;
-}
-
-/* .editor-controls button:hover {
-  background-color: #0056b3;
-} */
 
 .editor-controls a {
   margin-top: 20px; 
