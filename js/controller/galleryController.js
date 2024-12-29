@@ -23,5 +23,5 @@ function onImgSelect(imgId) {
     elTextInput.focus()
     elTextInput.value = ''
     const elColor = document.querySelector('.color-input')
-    elColor.value = 'white'
+    elColor.value = 'black'
 }

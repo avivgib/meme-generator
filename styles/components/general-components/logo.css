@@ -15,7 +15,7 @@
 }
 
 .logo.header-logo:hover {
-    animation: flip 0.9s ease-in-out;    
+    animation: bounce 0.9s ease-in-out;    
 }
 
 .logo.footer-logo {

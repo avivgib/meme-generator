@@ -28,7 +28,7 @@ var gMeme = {
         {
             txt: '',
             size: 30,
-            color: 'white',
+            color: 'black',
             x: 0,
             y: 10,
         }
@@ -68,7 +68,7 @@ function setLineTxt(txt) {
 function resetEditor() {
     const selectedLine = gMeme.lines[gMeme.selectedLineIdx];
     selectedLine.txt = ''
-    selectedLine.color = 'white'
+    selectedLine.color = 'black'
     selectedLine.size = 30
 }
 
