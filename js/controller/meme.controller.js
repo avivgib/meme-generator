@@ -6,13 +6,30 @@ var gCachedImage = null
 
 // Rendering Functions
 function renderMeme() {
+    document.querySelector('.meme-canvas').addEventListener('click', onCanvasClick);
+
     gElCanvas = document.querySelector('.meme-canvas')
     gCtx = gElCanvas.getContext('2d')
     gMeme = getMeme()
 
     gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height)
+
+
     loadImageOnce(() => {
         console.log('Image is loaded!')
+
+        gMeme.lines.forEach((line,idx) => {
+            gCtx.font = `${line.size}px Arial`
+            gCtx.fillStyle = line.color
+
+            if (idx === gMeme.selectedLineIdx) {
+                gCtx.strokeStyle = 'red'
+                gCtx.lineWidth = 2
+                gCtx.strokeText(line.txt, line.x, line.y)
+            }
+            gCtx.fillText(line.txt, line.x, line.y)
+        })
+
         drawText()
     })
 }
@@ -92,7 +109,13 @@ function calculateTextPosition(line) {
 
 // Event Handlers
 function onAddText(text) {
-    setLineTxt(text)
+    if (text) {
+        setLineTxt(text)
+    } else {
+        addText()
+    }
+
+    renderMeme()
     renderTextOnly()
 }
 

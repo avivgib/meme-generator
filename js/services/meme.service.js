@@ -46,32 +46,13 @@ function getImgs() {
 }
 
 function setImg(imgId) {
-    if(gMeme.selectedImgId !== imgId) {
+    if (gMeme.selectedImgId !== imgId) {
         gMeme.selectedImgId = imgId
         gCachedImage = null
     }
 }
 
-function getImageById(imgId) {
-    const img = gImgs.find((img) => img.id === imgId)
-    if (!img) return null
-
-    const image = new Image()
-    image.src = img.url
-    return image
-}
-
-function setLineTxt(txt) {
-    gMeme.lines[gMeme.selectedLineIdx].txt = txt.toUpperCase()
-}
-
-function resetEditor() {
-    const selectedLine = gMeme.lines[gMeme.selectedLineIdx];
-    selectedLine.txt = ''
-    selectedLine.color = 'black'
-    selectedLine.size = 30
-}
-
+// Set color
 function setColor(color) {
     gMeme.lines[gMeme.selectedLineIdx].color = color
 }
@@ -87,5 +68,21 @@ function decreaseFont() {
     const minFontSize = 10
     const selectedLine = gMeme.lines[gMeme.selectedLineIdx]
     selectedLine.size = Math.max(selectedLine.size - 2, minFontSize)
-    // gMeme.fontSize = Math.max(10, gMeme.fontSize - 2)
+}
+
+
+function getImageById(imgId) {
+    const img = gImgs.find((img) => img.id === imgId)
+    if (!img) return null
+
+    const image = new Image()
+    image.src = img.url
+    return image
+}
+
+function resetEditor() {
+    const selectedLine = gMeme.lines[gMeme.selectedLineIdx];
+    selectedLine.txt = ''
+    selectedLine.color = 'black'
+    selectedLine.size = 30
 }
