@@ -1,13 +1,21 @@
 .logo {
     font-family: 'Georgia', sans-serif;
     font-weight: 600;
-    color: #000;
+    color: #d8d1d1;
     font-style: italic;    
+}
+
+.logo:hover {
+    cursor: pointer;
 }
 
 .logo.header-logo {
     font-size: 2.3rem;
     margin-inline-start: 5px;
+}
+
+.logo.header-logo:hover {
+    animation: flip 0.9s ease-in-out;    
 }
 
 .logo.footer-logo {

@@ -2,15 +2,20 @@
 
 .main-layout {
     display: grid;
-    height: 100vh;
-    grid-template-rows: 110px 1fr 80px;
-    grid-template-columns: 10px 1fr 10px;
+    height: 100%;
+    grid-template-rows: 6rem 1fr 4rem;
 }
 
-.main-layout>*:not(.full) {
-    grid-column: 2;
+.main-layout > header {
+    grid-row: 1;
 }
 
-.main-layout>.full {
-    grid-column: -1 / 1;
+.main-layout > main {
+    grid-row: 2;
+    padding: 2rem 1rem;
+}
+
+.main-layout > footer {
+    grid-row: 3;
+
 }

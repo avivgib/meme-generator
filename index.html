@@ -4,17 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles/style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="https://kit.fontawesome.com/88d766061b.js" crossorigin="anonymous"></script>
     <title>Meme Generator</title>
   </head>
 
   <body onload="onInit()">
     <div class="main-layout">
 
-      <header class="main-header full align-content-center flex space-between">
+      <header class="main-header align-content-center flex space-between">
         <!-- <div class="header-content "> -->
 
           <div class="logo header-logo align-content-center">
@@ -25,6 +23,12 @@
             <button class="btn-nav gallery" onclick="showSection('gallery-section', this)">Gallery</button>
             <button class="btn-nav saved" onclick="showSection('saved-section', this)">Saved</button>
             <button class="btn-nav editor" onclick="showSection('editor-section', this)">Editor</button>
+
+            <!-- hamburger button -->
+            <a class="btn btn-primary hidden" href="#navigation-main" aria-label="Skip to main navigation">
+              <i class="fa fa-bars" aria-hidden="true"></i>
+            </a>
+            
           </nav>
         <!-- </div> -->
       </header>
@@ -45,18 +49,79 @@
         <section class="editor-section hidden">
           <div class="editor-content">
             <canvas class="meme-canvas" width="400" height="400"></canvas>
+
             <div class="editor-controls">
-              <input type="text" class="meme-text-input" placeholder="Enter text" oninput="onTextChange(this.value)"/>
+
+              <input type="text" class="text-input" placeholder="Enter text" oninput="onAddText(this.value)"/>
+
+              <div class="btns-editor1-control">
+
+                <button class="btn-switch-text" onclick="">
+                  <img src="imgs/icons/switch-text.png">
+                </button>
+                
+                <button class="btn-add-text" onclick="">
+                  <img src="imgs/icons/add-text.png">
+                </button>
+                
+                <button class="btn-delete-text" onclick="">
+                  <img src="imgs/icons/delete-text.png">
+                </button>
+              
+              </div>
+
+              <div class="btns-editor2-control">
+
+                <button onclick="onIncreaseFont()">                  
+                  <img src="imgs/icons/increase-font.png">
+                </button>
+                
+                <button onclick="onDecreaseFont()">
+                  <img src="imgs/icons/decrease-font.png">
+                </button>
+
+                <button>
+                    <img src="imgs/icons/align-to-left.png">
+                </button>
+
+                <button>
+                    <img src="imgs/icons/align-to-center.png">
+                </button>
+
+                <button>
+                    <img src="imgs/icons/align-to-right.png">
+                </button>
+                  
+              </div>
+
+              <div class="btns-editor3-control">
+
+                <select>
+                  <option>Font Text 1</option>
+                  <option>Font Text 2</option>
+                  <option>Font Text 3</option>
+                </select>
+
+                <button>
+                    <img src="imgs/icons/fill-text-color.png">
+                </button>
+
+                <button>
+                    <img src="imgs/icons/border-paint.png">
+                </button>
+
+              </div>
+
               <input type="color" class="color-input" oninput="onColorChange(this.value)"/>
-              <button onclick="onIncreaseFont()">Increase Font</button>
-              <button onclick="onDecreaseFont()">Decrease Font</button>
+
+              
               <a href="#" class="btn download-btn" onclick="onDownloadMeme(this)" download="new-meme.jpg">Download Meme</a>
             </div>
           </div>
         </section>
       </main>
 
-      <footer class="footer full align-content-center">
+      <footer class="footer align-content-center">
         <div class="footer-content flex direction-column align-items-center">
           <div class="logo footer-logo">Meme-Gen</div>
           <small>© 2024 Meme-Gen.com - Aviv Gibli</small>

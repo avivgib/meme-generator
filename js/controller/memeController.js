@@ -91,7 +91,7 @@ function calculateTextPosition(line) {
 }
 
 // Event Handlers
-function onTextChange(text) {
+function onAddText(text) {
     setLineTxt(text)
     renderTextOnly()
 }

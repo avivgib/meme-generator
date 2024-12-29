@@ -8,7 +8,9 @@
 @import url('./basics/layout.css');
 
 /* COMPONENTS */
-@import url('./components/editor.css');
+@import url('./components/editor/main-editor.css');
+@import url('./components/editor/editor-canvas.css');
+@import url('./components/editor/editor-tools.css');
 @import url('./components/gallery.css');
 
 /* General Components */

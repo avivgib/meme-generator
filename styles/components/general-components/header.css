@@ -2,7 +2,5 @@ header {
     height: max-content;
     padding-block: 10px;
     padding-inline: 30px;
-    background-image: linear-gradient(to bottom right, 
-                                    rgb(207 174 181), 
-                                    rgb(72 5 17));
+    background-color: rgb(33, 5, 65);
 }

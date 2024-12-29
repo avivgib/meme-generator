@@ -19,7 +19,7 @@ function onImgSelect(imgId) {
     const elEditorBtn = document.querySelector('.editor')
     showSection('editor-section', elEditorBtn)
 
-    const elTextInput = document.querySelector('.meme-text-input')
+    const elTextInput = document.querySelector('.text-input')
     elTextInput.focus()
     elTextInput.value = ''
     const elColor = document.querySelector('.color-input')
