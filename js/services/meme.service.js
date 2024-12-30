@@ -20,17 +20,21 @@ var gImgs = [
     { id: 17, url: 'imgs/17.jpg', keywords: ['funny', 'man'] },
     { id: 18, url: 'imgs/18.jpg', keywords: ['funny', 'toy'] }
 ]
+
 var gMeme = {
     selectedImgId: null,
     selectedLineIdx: 0,
     canvasBackground: null,
     lines: [
         {
-            txt: '',
+            txt: 'Enter Text',
             size: 30,
-            color: 'black',
-            x: 0,
-            y: 10,
+            color: 'white',
+            borderColor: 'black',
+            borderWidth: 1,
+            textAlign: 'center',
+            posX: 200,
+            posY: 40,
         }
     ]
 }
@@ -45,44 +49,49 @@ function getImgs() {
     return gImgs
 }
 
-function setImg(imgId) {
-    if (gMeme.selectedImgId !== imgId) {
-        gMeme.selectedImgId = imgId
-        gCachedImage = null
-    }
-}
 
 // Set color
 function setColor(color) {
     gMeme.lines[gMeme.selectedLineIdx].color = color
 }
 
-function increaseFont() {
-    const maxFontSize = Math.floor(gElCanvas.width / 10)
+// function resetEditorData() {
+//     const selectedLine = gMeme.lines[gMeme.selectedLineIdx];
+//     selectedLine.txt = ''
+//     selectedLine.size = 30
+//     selectedLine.color = 'black'
+//     selectedLine.borderColor = '#FFFFFF'
+//     selectedLine.borderWidth = 5
+//     selectedLine.textAlign = 'center'
+//     selectedLine.posX = 0
+//     selectedLine.posY = 10
+// }
 
-    const selectedLine = gMeme.lines[gMeme.selectedLineIdx]
-    selectedLine.size = Math.min(selectedLine.size + 2, maxFontSize)
-}
+// function resetDomEditor() {
+//     focusAndCleanTextInput()
 
-function decreaseFont() {
-    const minFontSize = 10
-    const selectedLine = gMeme.lines[gMeme.selectedLineIdx]
-    selectedLine.size = Math.max(selectedLine.size - 2, minFontSize)
-}
+//     // const elColor = document.querySelector('.color-input')
+//     // elColor.value = 'black'
+
+//     // const elColor = document.querySelector('.color-input')
+//     // elColor.value = 'black'
+
+//     // const elColor = document.querySelector('.color-input')
+//     // elColor.value = 'black'
 
 
-function getImageById(imgId) {
-    const img = gImgs.find((img) => img.id === imgId)
-    if (!img) return null
+//     // // const elColor = document.querySelector('.color-input')
+//     // // elColor.value = 'black'
 
-    const image = new Image()
-    image.src = img.url
-    return image
-}
+//     // const elbtnFillColor = document.querySelector('.btn-fill-color')
+//     // elbtnFillColor.value = selectedLine.color
 
-function resetEditor() {
-    const selectedLine = gMeme.lines[gMeme.selectedLineIdx];
-    selectedLine.txt = ''
-    selectedLine.color = 'black'
-    selectedLine.size = 30
+//     // const elBorderPaint = document.querySelector('.btn-border-paint')
+//     // elBorderPaint.value = selectedLine.borderColor
+// }
+
+function focusAndCleanTextInput() {
+    const elTextInput = document.querySelector('.text-input')
+    elTextInput.value = ''
+    elTextInput.focus()
 }

@@ -2,95 +2,58 @@
 
 var gElCanvas
 var gCtx
-var gCachedImage = null
+var gSelectedLine
+var gSelectedImage
+var gStartPosition
+const gInput = document.querySelector('.text-input')
 
-// Rendering Functions
+
+function initCanvas(imgUrl) {
+    gSelectedImage = imgUrl
+    renderMeme()
+}
+
 function renderMeme() {
-    document.querySelector('.meme-canvas').addEventListener('click', onCanvasClick);
-
     gElCanvas = document.querySelector('.meme-canvas')
     gCtx = gElCanvas.getContext('2d')
-    gMeme = getMeme()
+    gSelectedLine = getLine()
 
-    gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height)
+    const img = new Image()
+    img.src = gSelectedImage
 
-
-    loadImageOnce(() => {
-        console.log('Image is loaded!')
-
-        gMeme.lines.forEach((line,idx) => {
-            gCtx.font = `${line.size}px Arial`
-            gCtx.fillStyle = line.color
-
-            if (idx === gMeme.selectedLineIdx) {
-                gCtx.strokeStyle = 'red'
-                gCtx.lineWidth = 2
-                gCtx.strokeText(line.txt, line.x, line.y)
-            }
-            gCtx.fillText(line.txt, line.x, line.y)
-        })
-
-        drawText()
-    })
-}
-
-function loadImageOnce(callback) {
-    if (gCachedImage) {
-        // if image exist, draw it
-        drawImageToCanvas(gCachedImage)
-        if (callback) callback()
-        return
-    }
-
-    // load the image in the first time
-    const img = gImgs.find((img) => img.id === gMeme.selectedImgId)
-    if (!img) return
-
-    const image = new Image()
-    image.src = img.url
-    image.onload = () => {
-        gCachedImage = image
-        drawImageToCanvas(image)
-        if (callback) callback()
+    img.onload = () => {
+        gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height)
+        resizeCanvas()
+        gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
+        renderLines()
+        onL()
     }
 }
 
-function drawImageToCanvas(image) {
-    const { width: canvasWidth, height: canvasHeight } = gElCanvas
-    const { width: imgWidth, height: imgHeight } = image
-
-    const { x, y, width, height } = calculateImageDimensions(canvasWidth, canvasHeight, imgWidth, imgHeight)
-    gCtx.drawImage(image, x, y, width, height)
-}
-
-function calculateImageDimensions(canvasWidth, canvasHeight, imgWidth, imgHeight) {
-    const canvasAspectRatio = canvasWidth / canvasHeight
-    const imgAspectRatio = imgWidth / imgHeight
-
-    let width, height
-    if (imgAspectRatio > canvasAspectRatio) {
-        // Image is wider than canvas
-        width = canvasWidth
-        height = canvasWidth / imgAspectRatio
+// Maintain the image proportions
+function resizeCanvas() {
+    const img = new Image()
+    img.src = gSelectedImage
+    if (window.outerWidth > 768) {
+        gElCanvas.width = 394
     } else {
-        // Image is taller than canvas
-        width = canvasHeight * imgAspectRatio
-        height = canvasHeight
+        gElCanvas.width = window.outerWidth - 30
     }
 
-    const x = (canvasWidth - width) / 2
-    const y = (canvasHeight - height) / 2
-
-    return { x, y, width, height }
+    const canvasHeight = (img.height * gElCanvas.width) / img.width
+    gElCanvas.height = canvasHeight
 }
 
-function drawText() {
+function renderLines() {
     gMeme.lines.forEach((line) => {
-        if (!line.txt || !line.color || !line.size) return
+        gCtx.font = `${line.size}px Arial`
+        gCtx.textAlign = line.textAlign
+        gCtx.fillStyle = line.color
+        gCtx.strokeStyle = line.borderColor
+        gCtx.lineWidth = line.borderWidth
 
-        configureTextStyle(line)
-        const { x, y } = calculateTextPosition(line)
-        gCtx.fillText(line.txt, x, y)
+        gCtx.fillText(line.txt, line.posX, line.posY)
+        gCtx.strokeText(line.txt, line.posX, line.posY)
     })
 }
 

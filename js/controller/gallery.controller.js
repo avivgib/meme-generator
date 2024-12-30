@@ -5,16 +5,19 @@ function renderGallery() {
     const images = getImgs() 
 
     const strHtml = images.map((img) =>  `
-        <img src="${img.url}" alt="Meme Image" onclick="onImgSelect(${img.id})">
+        <img src="${img.url}" alt="Meme Image" onclick="onImageSelect(${img.id})">
         `).join('')
 
-        gallery.innerHTML = strHtml
+    gallery.innerHTML = strHtml
 }
 
-function onImgSelect(imgId) {
-    setImg(imgId)
-    resetEditor()
-    renderMeme()
+function onImageSelect(imgId) {
+    const selectedImage = gImgs.find((img) => img.id === imgId)
+    
+    if (selectedImage) {
+        const imgUrl = selectedImage.url
+        initCanvas(imgUrl)
+    }
 
     const elEditorBtn = document.querySelector('.editor')
     showSection('editor-section', elEditorBtn)
