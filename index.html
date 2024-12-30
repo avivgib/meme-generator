@@ -52,64 +52,63 @@
 
             <div class="editor-controls">
 
-              <input type="text" class="text-input" placeholder="Enter text" oninput="onAddText(this.value)"/>
+              <input type="text" class="text-input" placeholder="Enter text" oninput="onAddText(this)"/>
 
               <div class="text-actions-controls">
-                <button class="btn-switch-text" onclick="">
+                <button class="btn-switch-text" onclick="onSwitchLine()">
                   <img src="imgs/icons/switch-text.png">
                 </button>
                 
-                <button class="btn-add-text" onclick="">
+                <button class="btn-add-text" onclick="onAddLine(0)">
                   <img src="imgs/icons/add-text.png">
                 </button>
                 
-                <button class="btn-delete-text" onclick="">
-                  <img src="imgs/icons/delete-text.png">
+                <button class="btn-remove-text" onclick="onRemoveLine()">
+                  <img src="imgs/icons/remove-text.png">
                 </button>
               </div>
 
               <div class="text-formatting-controls">
-                <button onclick="onIncreaseFont()">                  
+                <button onclick="onChangeFontSize(2)">                  
                   <img src="imgs/icons/increase-font.png">
                 </button>
                 
-                <button onclick="onDecreaseFont()">
+                <button onclick="onChangeFontSize(-2)">
                   <img src="imgs/icons/decrease-font.png">
                 </button>
 
-                <button>
+                <button onclick="onAlignText('left')">
                     <img src="imgs/icons/align-to-left.png">
                 </button>
 
-                <button>
+                <button onclick="onAlignText('center')">
                     <img src="imgs/icons/align-to-center.png">
                 </button>
 
-                <button>
+                <button onclick="onAlignText('right')">
                     <img src="imgs/icons/align-to-right.png">
                 </button>
               </div>
 
               <div class="text-style-controls">
-                <select>
+                <!-- <select>
                   <option>Font Text 1</option>
                   <option>Font Text 2</option>
                   <option>Font Text 3</option>
-                </select>
+                </select> -->
 
-                <button>
+                <button class="btn-fill-color" onclick="onPickFillColor()">
                     <img src="imgs/icons/fill-text-color.png">
-                </button>
-
-                <button>
+                    <input type="color" class="fill-color">
+                  </button>
+                  
+                  <button class="btn-border-color" onclick="onPickBorderColor()">
                     <img src="imgs/icons/border-paint.png">
+                    <input type="color" class="border-color">
                 </button>
               </div>
-
-              <input type="color" class="color-input" oninput="onColorChange(this.value)"/>
-
               
-              <a href="#" class="btn download-btn" onclick="onDownloadMeme(this)" download="new-meme.jpg">Download Meme</a>
+              <a href="#" class="btn download-btn" onclick="onDownloadMeme(this)" download="new-meme.jpg">Download</a>
             </div>
           </div>
         </section>
@@ -123,9 +122,12 @@
       </footer>
     </div>
 
-    <script src="./js/services/memeService.js"></script>
-    <script src="./js/controller/galleryController.js"></script>
-    <script src="./js/controller/memeController.js"></script>
+
+    <script src="./js/services/text-actions-meme.service.js"></script>
+    
+    <script src="./js/services/meme.service.js"></script>
+    <script src="./js/controller/gallery.controller.js"></script>
+    <script src="./js/controller/meme.controller.js"></script>
     <script src="js/main.js"></script>
   </body>
 </html>

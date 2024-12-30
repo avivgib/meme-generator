@@ -57,44 +57,71 @@ function renderLines() {
     })
 }
 
-function configureTextStyle(line) {
-    gCtx.font = `${line.size}px Arial`
-    gCtx.fillStyle = line.color || 'white'
-    gCtx.textAlign = 'center'
-    gCtx.strokeStyle = 'rgba(0, 0, 0, 0)'
-}
+function onAddText(inputElement) {
+    const text = inputElement.value
 
-function calculateTextPosition(line) {
-    const x = gElCanvas.width / 2
-    const y = line.y + line.size
-    return { x, y }
-}
-
-// Event Handlers
-function onAddText(text) {
-    if (text) {
-        setLineTxt(text)
+    if (gMeme.lines.length) {
+        const selectedLine = gMeme.lines[gMeme.selectedLineIdx]
+        selectedLine.txt = text
     } else {
-        addText()
+        addLine(0, text)
     }
-
     renderMeme()
-    renderTextOnly()
+}
+
+function onAddLine(count) {
+    addLine(count)
+    gInput.value = ''
+    renderMeme()
+}
+
+function onRemoveLine() {
+    if (gMeme.lines.length && gMeme.lines.length > 0) {
+        removeLine()
+        gMeme.selectedLineIdx = gMeme.lines.length - 1
+        gSelectedLine = gMeme.lines[gMeme.selectedLineIdx]
+        gInput.value = gSelectedLine.txt
+    } else {
+        gInput.value = ''
+    }
+    renderMeme()
+}
+
+function onSwitchLine() {
+    switchLine()
+    renderMeme()
 }
 
 function onColorChange(color) {
     setColor(color)
-    renderTextOnly()
 }
 
-function onIncreaseFont() {
-    increaseFont()
-    renderTextOnly()
+function onChangeFontSize(delta) {
+    changeFontSize(delta)
+    renderMeme()
 }
 
-function onDecreaseFont() {
-    decreaseFont()
-    renderTextOnly()
+function onAlignText(alignType) {
+    alignText(alignType)
+    renderMeme()
+}
+
+function onPickFillColor() {
+    const elFillColor = document.querySelector('.fill-color')
+    elFillColor.addEventListener('input', (event) => {
+        gSelectedLine.color = event.target.value
+        renderMeme()
+    })
+    elFillColor.click()
+}
+
+function onPickBorderColor() {
+    const elBorderColor = document.querySelector('.border-color')
+    elBorderColor.addEventListener('input', (event) => {
+        gSelectedLine.borderColor = event.target.value
+        renderMeme()
+    })
+    elBorderColor.click()
 }
 
 function onDownloadMeme(elLink) {
@@ -102,8 +129,3 @@ function onDownloadMeme(elLink) {
     elLink.href = imgContent
 }
 
-function renderTextOnly() {
-    gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height)
-    drawImageToCanvas(gCachedImage)
-    drawText()
-}

@@ -39,7 +39,9 @@ var gMeme = {
     ]
 }
 
-// var gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'baby': 2 }
+function getLine() {
+    return gMeme.lines[gMeme.selectedLineIdx]
+}
 
 function getMeme() {
     return gMeme

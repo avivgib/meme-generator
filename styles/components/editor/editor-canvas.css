@@ -15,7 +15,7 @@
 }
 
 .meme-canvas {
-  border: 1px solid #ddd;
+  border: 3px solid #ddd;
   border-radius: 10px;
 }
 
@@ -29,7 +29,7 @@
   height: 400px;
   width: 400px;
 
-  border: 3px solid #8e8e8e;
+  border: 3px solid #ddd;
   background-color: #272927;
   border-radius: 10px;
 }
@@ -45,6 +45,12 @@
 
 .editor-controls .text-input {
   cursor: auto;
+}
+
+.text-input {
+  text-align: center;
+  font-size: 20px;
+  padding: 5px;
 }
 
 .editor-controls a {

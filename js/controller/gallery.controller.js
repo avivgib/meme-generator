@@ -21,14 +21,5 @@ function onImageSelect(imgId) {
 
     const elEditorBtn = document.querySelector('.editor')
     showSection('editor-section', elEditorBtn)
-
-    focusAndcleanTextInput()
-    const elColor = document.querySelector('.color-input')
-    elColor.value = 'black'
-}
-
-function focusAndcleanTextInput() {
-    const elTextInput = document.querySelector('.text-input')
-    elTextInput.focus()
-    elTextInput.value = ''
+    focusAndCleanTextInput()
 }
