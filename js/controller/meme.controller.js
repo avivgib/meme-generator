@@ -5,16 +5,16 @@ var gCtx
 var gSelectedLine
 var gSelectedImage
 var gStartPosition
-const gInput = document.querySelector('.text-input')
-
+var gInput
 
 function initCanvas(imgUrl) {
+    gElCanvas = document.querySelector('.meme-canvas')
+    gInput = document.querySelector('.text-input')
     gSelectedImage = imgUrl
     renderMeme()
 }
 
 function renderMeme() {
-    gElCanvas = document.querySelector('.meme-canvas')
     gCtx = gElCanvas.getContext('2d')
     gSelectedLine = getLine()
 
@@ -26,7 +26,7 @@ function renderMeme() {
         resizeCanvas()
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
         renderLines()
-        onL()
+        drawTextBox()
     }
 }
 
@@ -34,18 +34,14 @@ function renderMeme() {
 function resizeCanvas() {
     const img = new Image()
     img.src = gSelectedImage
-    if (window.outerWidth > 768) {
-        gElCanvas.width = 394
-    } else {
-        gElCanvas.width = window.outerWidth - 30
-    }
 
-    const canvasHeight = (img.height * gElCanvas.width) / img.width
-    gElCanvas.height = canvasHeight
+    gElCanvas.width = window.outerWidth > 768 ? 394 : window.outerWidth - 30
+    gElCanvas.height = (img.height * gElCanvas.width) / img.width
 }
 
 function renderLines() {
-    gMeme.lines.forEach((line) => {
+    const lines = getLines()
+    lines.forEach((line) => {
         gCtx.font = `${line.size}px Arial`
         gCtx.textAlign = line.textAlign
         gCtx.fillStyle = line.color
@@ -58,14 +54,12 @@ function renderLines() {
 }
 
 function onAddText(inputElement) {
-    const text = inputElement.value
+    const text = inputElement.value.trim()
+    if (!text) return
 
-    if (gMeme.lines.length) {
-        const selectedLine = gMeme.lines[gMeme.selectedLineIdx]
-        selectedLine.txt = text
-    } else {
-        addLine(0, text)
-    }
+    const selectedLineIdx = getSelectedLineIndex()
+    selectedLineIdx !== -1 ? updateLineText(selectedLineIdx, text) : addLine(0, text)
+    
     renderMeme()
 }
 
@@ -76,24 +70,13 @@ function onAddLine(count) {
 }
 
 function onRemoveLine() {
-    if (gMeme.lines.length && gMeme.lines.length > 0) {
-        removeLine()
-        gMeme.selectedLineIdx = gMeme.lines.length - 1
-        gSelectedLine = gMeme.lines[gMeme.selectedLineIdx]
-        gInput.value = gSelectedLine.txt
-    } else {
-        gInput.value = ''
-    }
+    removeLine()
     renderMeme()
 }
 
 function onSwitchLine() {
     switchLine()
     renderMeme()
-}
-
-function onColorChange(color) {
-    setColor(color)
 }
 
 function onChangeFontSize(delta) {

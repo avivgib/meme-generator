@@ -1,17 +1,5 @@
-function setLineTxt(text = 'Enter Text', position = { x: 200, y: 35 }) {
-    return {
-        txt: text,
-        size: 30,
-        color: 'white',
-        borderColor: 'black',
-        borderWidth: 1,
-        textAlign: 'center',
-        posX: position.x,
-        posY: position.y,
-    }
-}
+'use strict'
 
-// Add Text
 function addText(inputElement) {
     const elText = inputElement.value
     if (gMeme.lines.length) {
@@ -37,8 +25,17 @@ function addLine(count, text = 'Enter Text') {
     gMeme.selectedLineIdx = gMeme.lines.length - 1
 }
 
-function removeLine() {
-    gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+function setLineTxt(text = 'Enter Text', position = { x: 200, y: 35 }) {
+    return {
+        txt: text,
+        size: 30,
+        color: 'white',
+        borderColor: 'black',
+        borderWidth: 1,
+        textAlign: 'center',
+        posX: position.x,
+        posY: position.y,
+    }
 }
 
 function switchLine() {
@@ -46,12 +43,13 @@ function switchLine() {
     else gMeme.selectedLineIdx = gMeme.lines.length - 1
 }
 
-// Highlight selected text
-// function highlightSelectedText() {
-//     const selectedLine = gMeme.lines[gMeme.selectedLineIdx];
-//     console.log('Selected Line:', selectedLine);
-// }
-
+function removeLine() {
+    if (gMeme.lines.length) {
+        gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+        gMeme.selectedLineIdx = Math.max(gMeme.lines.length - 1, 0)
+        // gInput.value = gSelectedLine.txt
+    }
+}
 
 function changeFontSize(delta) {
     const maxFontSize = Math.floor(gElCanvas.width / 8)
@@ -64,12 +62,20 @@ function changeFontSize(delta) {
 function alignText(alignType) {
     const textWidth = gSelectedLine.txt.length
     gSelectedLine.textAlign = alignType
+
+    if (alignType === 'left') gSelectedLine.posX = 10
+    else if (alignType === 'center') gSelectedLine.posX = (gElCanvas.width - textWidth) / 2
+    else gSelectedLine.posX = gElCanvas.width - textWidth
+}
+
+function alignText(alignType) {
+    const textWidth = gSelectedLine.txt.length
+    gSelectedLine.textAlign = alignType
     
     if (alignType === 'left') gSelectedLine.posX = 10
     else if (alignType === 'center') gSelectedLine.posX = (gElCanvas.width - textWidth) / 2 
     else gSelectedLine.posX = gElCanvas.width - textWidth
 }
-
 
 function onCanvasClick(event) {
     const canvas = document.querySelector('.meme-canvas');
@@ -96,12 +102,6 @@ function onCanvasClick(event) {
         document.querySelector('.text-input').value = selectedLine.txt;
         renderMeme();
     }
-}
-
-function focusAndCleanTextInput() {
-    const elTextInput = document.querySelector('.text-input')
-    elTextInput.value = ''
-    elTextInput.focus()
 }
 
 function drawTextBox() {
