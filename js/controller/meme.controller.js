@@ -8,9 +8,12 @@ var gStartPosition
 var gInput
 
 function initCanvas(imgUrl) {
+    gSelectedImage = imgUrl
+    
     gElCanvas = document.querySelector('.meme-canvas')
     gInput = document.querySelector('.text-input')
-    gSelectedImage = imgUrl
+
+    addListeners()
     renderMeme()
 }
 
@@ -26,7 +29,7 @@ function renderMeme() {
         resizeCanvas()
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
         renderLines()
-        drawTextBox()
+        onDrewRect()
     }
 }
 
